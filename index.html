@@ -3,57 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instalive Tools - Random + FB l.php</title>
+  <title>Instalive Tools • Random + FB Bypass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {background:#000;color:#fff;font-family:system-ui;margin:0;padding:20px;}
-    h1 {text-align:center;color:#ff2d92;margin:20px 0;}
-    .container {display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
-    .card {background:#111;padding:30px;border-radius:20px;width:480px;box-shadow:0 8px 30px rgba(255,45,146,0.2);}
-    h2 {color:#ff2d92;text-align:center;margin-top:0;}
-    button {background:#ff2d92;color:#fff;border:none;padding:16px;font-size:18px;font-weight:bold;border-radius:12px;cursor:pointer;width:100%;margin:15px 0;}
-    button:hover {background:#e02484;}
-    textarea {width:100%;height:320px;background:#000;color:#fff;border:2px solid #333;border-radius:12px;padding:15px;font-size:15px;resize:vertical;}
-    .result {margin-top:20px;background:#000;padding:20px;border-radius:12px;max-height:450px;overflow-y:auto;line-height:2.1;font-size:15px;}
-    .result a {color:#00ff9d;word-break:break-all;}
-    .copy {background:#00ff9d;color:#000;}
-    .convert {background:#1877f2;}
+    :root {
+      --pink: #ff2d92;
+      --cyan: #00ff9d;
+      --blue: #0099ff;
+      --bg: #0a0a0a;
+      --card: rgba(20,20,30,0.6);
+      --glass: rgba(255,255,255,0.05);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120,0,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,45,146,0.15) 0%, transparent 50%);
+      padding: 40px 20px;
+    }
+    h1 {
+      text-align:center;
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, #ff2d92, #00ff9d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .subtitle {text-align:center; opacity:0.7; font-size:1.1rem; margin-bottom:40px;}
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--pink), var(--cyan));
+    }
+    .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(255,45,146,0.2); }
+
+    h2 {
+      font-size: 1.6rem;
+      text-align:center;
+      margin-bottom: 24px;
+      color: var(--pink);
+      font-weight: 700;
+    }
+
+    button {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin: 12px 0;
+    }
+    .btn-generate {
+      background: linear-gradient(135deg, var(--pink), #ff6bc7);
+      color: white;
+      box-shadow: 0 8px 20px rgba(255,45,146,0.3);
+    }
+    .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255,45,146,0.4); }
+
+    .btn-convert {
+      background: linear-gradient(135deg, #1877f2, #0099ff);
+      color: white;
+    }
+    .btn-copy {
+      background: linear-gradient(135deg, var(--cyan), #00cc7a);
+      color: #000;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      height: 280px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 18px;
+      color: #fff;
+      font-size: 15px;
+      resize: vertical;
+      margin: 16px 0;
+      backdrop-filter: blur(10px);
+    }
+    textarea::placeholder { color: rgba(255,255,255,0.4); }
+
+    .result {
+      margin-top: 20px;
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      max-height: 420px;
+      overflow-y: auto;
+      display: none;
+    }
+    .result::-webkit-scrollbar { width: 8px; }
+    .result::-webkit-scrollbar-track { background: transparent; }
+    .result::-webkit-scrollbar-thumb { background: rgba(255,45,146,0.4); border-radius: 4px; }
+
+    .result a {
+      color: var(--cyan);
+      word-break: break-all;
+      display: block;
+      margin: 8px 0;
+      transition: 0.3s;
+    }
+    .result a:hover { color: #fff; text-decoration: underline; }
+
+    footer {
+      text-align:center;
+      margin-top: 80px;
+      opacity: 0.5;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
 
   <h1>Instalive Tools</h1>
+  <p class="subtitle">Generate 100 link random • Convert ke Facebook l.php (bypass cache)</p>
 
   <div class="container">
 
-    <!-- CARD KIRI: GENERATE 100 RANDOM LINK -->
+    <!-- CARD KIRI: RANDOM LINK -->
     <div class="card">
-      <h2>Generate 100 Link Random</h2>
-      <button onclick="generateRandom()">GENERATE 100 LINK</button>
-      <div class="result" id="randomResult" style="display:none;">
-        <button class="copy" onclick="copyRandom()">COPY SEMUA LINK</button>
+      <h2>Generate 100 Random Links</h2>
+      <button class="btn-generate" onclick="generateRandom()">GENERATE 100 LINK</button>
+      <div class="result" id="randomResult">
+        <button class="btn-copy" onclick="copyRandom()">COPY SEMUA LINK</button>
         <div id="randomOutput"></div>
       </div>
     </div>
 
-    <!-- CARD KANAN: CONVERT KE FACEBOOK l.php -->
+    <!-- CARD KANAN: CONVERT KE FB l.php -->
     <div class="card">
-      <h2>Convert ke Link Facebook (l.php)</h2>
-      <p style="font-size:14px;opacity:0.8;">Paste link satu per baris → otomatis jadi link FB</p>
-      <textarea id="inputLinks" placeholder="https://jennyhebya.github.io/Instalive?a1b2c3d4
-https://jennyhebya.github.io/Instalive?x9y8z7w6"></textarea>
-      <button class="convert" onclick="convertToFB()">CONVERT KE LINK FACEBOOK</button>
-      <div class="result" id="fbResult" style="display:none;">
-        <button class="copy" onclick="copyFB()">COPY SEMUA LINK FB</button>
+      <h2>Convert → Facebook l.php</h2>
+      <textarea id="inputLinks" placeholder="Tempel link di sini (satu per baris)
+
+https://jennyhebya.github.io/Instalive?abc12345
+https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
+      <button class="btn-convert" onclick="convertToFB()">CONVERT KE LINK FACEBOOK</button>
+      <div class="result" id="fbResult">
+        <button class="btn-copy" onclick="copyFB()">COPY SEMUA LINK FB</button>
         <div id="fbOutput"></div>
       </div>
     </div>
 
   </div>
 
+  <footer>Made with love • Selalu update thumbnail FB tanpa ribet</footer>
+
   <script>
     const BASE = "https://jennyhebya.github.io/Instalive";
 
-    // RANDOM 8 KARAKTER
     function rand8() {
       const c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       let r = "";
@@ -61,7 +189,7 @@ https://jennyhebya.github.io/Instalive?x9y8z7w6"></textarea>
       return r;
     }
 
-    // CARD KIRI
+    // GENERATE 100 RANDOM
     function generateRandom() {
       const out = document.getElementById("randomOutput");
       out.innerHTML = "";
@@ -71,31 +199,31 @@ https://jennyhebya.github.io/Instalive?x9y8z7w6"></textarea>
         const kode = rand8();
         const link = `${BASE}?${kode}`;
         window.randomLinks += link + "\n";
-        out.innerHTML += `<a href="${link}" target="_blank">${link}</a><br>`;
+        out.innerHTML += `<a href="${link}" target="_blank">${link}</a>`;
       }
       document.getElementById("randomResult").style.display = "block";
     }
 
     function copyRandom() {
       navigator.clipboard.writeText(window.randomLinks);
-      alert("100 link original berhasil dicopy!");
+      alert("100 link berhasil dicopy!");
     }
 
-    // CARD KANAN - CONVERT KE l.php
+    // CONVERT KE FACEBOOK l.php
     function convertToFB() {
       const text = document.getElementById("inputLinks").value.trim();
-      if (!text) return alert("Masukkan link dulu!");
+      if (!text) return alert("Paste link dulu ya!");
 
-      const links = text.split("\n").map(l => l.trim()).filter(l => l);
+      const links = text.split("\n").map(l => l.trim()).filter(Boolean);
       const out = document.getElementById("fbOutput");
       out.innerHTML = "";
       window.fbLinks = "";
 
-      links.forEach((original, i) => {
-        const encoded = encodeURIComponent(original);
+      links.forEach(link => {
+        const encoded = encodeURIComponent(link);
         const fbLink = `https://web.facebook.com/l.php?u=${encoded}`;
         window.fbLinks += fbLink + "\n";
-        out.innerHTML += `<a href="${fbLink}" target="_blank">${fbLink}</a><br>`;
+        out.innerHTML += `<a href="${fbLink}" target="_blank">${fbLink}</a>`;
       });
 
       document.getElementById("fbResult").style.display = "block";
