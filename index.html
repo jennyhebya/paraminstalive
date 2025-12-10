@@ -20,7 +20,7 @@
       color: #fff;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      background-image: 
+      background-image:
         radial-gradient(circle at 20% 80%, rgba(120,0,255,0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(255,45,146,0.15) 0%, transparent 50%);
       padding: 40px 20px;
@@ -36,7 +36,6 @@
       font-weight: 700;
     }
     .subtitle {text-align:center; opacity:0.7; font-size:1.1rem; margin-bottom:40px;}
-
     .container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -61,7 +60,6 @@
       background: linear-gradient(90deg, var(--pink), var(--cyan));
     }
     .card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(255,45,146,0.2); }
-
     h2 {
       font-size: 1.6rem;
       text-align:center;
@@ -69,7 +67,6 @@
       color: var(--pink);
       font-weight: 700;
     }
-
     button {
       padding: 16px 24px;
       border: none;
@@ -87,7 +84,6 @@
       box-shadow: 0 8px 20px rgba(255,45,146,0.3);
     }
     .btn-generate:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255,45,146,0.4); }
-
     .btn-convert {
       background: linear-gradient(135deg, #1877f2, #0099ff);
       color: white;
@@ -97,7 +93,6 @@
       color: #000;
       font-weight: bold;
     }
-
     textarea {
       width: 100%;
       height: 280px;
@@ -112,7 +107,6 @@
       backdrop-filter: blur(10px);
     }
     textarea::placeholder { color: rgba(255,255,255,0.4); }
-
     .result {
       margin-top: 20px;
       background: var(--glass);
@@ -126,7 +120,6 @@
     .result::-webkit-scrollbar { width: 8px; }
     .result::-webkit-scrollbar-track { background: transparent; }
     .result::-webkit-scrollbar-thumb { background: rgba(255,45,146,0.4); border-radius: 4px; }
-
     .result a {
       color: var(--cyan);
       word-break: break-all;
@@ -135,7 +128,6 @@
       transition: 0.3s;
     }
     .result a:hover { color: #fff; text-decoration: underline; }
-
     footer {
       text-align:center;
       margin-top: 80px;
@@ -145,12 +137,9 @@
   </style>
 </head>
 <body>
-
   <h1>Instalive Tools</h1>
   <p class="subtitle">Generate 100 link random • Convert ke Facebook l.php (bypass cache)</p>
-
   <div class="container">
-
     <!-- CARD KIRI: RANDOM LINK -->
     <div class="card">
       <h2>Generate 100 Random Links</h2>
@@ -165,7 +154,6 @@
     <div class="card">
       <h2>Convert → Facebook l.php</h2>
       <textarea id="inputLinks" placeholder="Tempel link di sini (satu per baris)
-
 https://jennyhebya.github.io/Instalive?abc12345
 https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
       <button class="btn-convert" onclick="convertToFB()">CONVERT KE LINK FACEBOOK</button>
@@ -175,13 +163,22 @@ https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
       </div>
     </div>
 
-  </div>
+    <!-- CARD BARU: DEBUG l.wl.co -->
+    <div class="card">
+      <h2>Debug → l.wl.co/l?u=…</h2>
+      <textarea id="inputWl" placeholder="Tempel link yang sama (satu per baris)"></textarea>
+      <button class="btn-convert" onclick="convertToWl()">CONVERT KE l.wl.co</button>
+      <div class="result" id="wlResult">
+        <button class="btn-copy" onclick="copyWl()">COPY SEMUA LINK l.wl.co</button>
+        <div id="wlOutput"></div>
+      </div>
+    </div>
 
+  </div>
   <footer>Made with love • Selalu update thumbnail FB tanpa ribet</footer>
 
   <script>
     const BASE = "https://jennyhebya.github.io/Instalive";
-
     function rand8() {
       const c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       let r = "";
@@ -194,7 +191,6 @@ https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
       const out = document.getElementById("randomOutput");
       out.innerHTML = "";
       window.randomLinks = "";
-
       for (let i = 0; i < 100; i++) {
         const kode = rand8();
         const link = `${BASE}?${kode}`;
@@ -203,7 +199,6 @@ https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
       }
       document.getElementById("randomResult").style.display = "block";
     }
-
     function copyRandom() {
       navigator.clipboard.writeText(window.randomLinks);
       alert("100 link berhasil dicopy!");
@@ -213,27 +208,43 @@ https://jennyhebya.github.io/Instalive?xyz98765"></textarea>
     function convertToFB() {
       const text = document.getElementById("inputLinks").value.trim();
       if (!text) return alert("Paste link dulu ya!");
-
       const links = text.split("\n").map(l => l.trim()).filter(Boolean);
       const out = document.getElementById("fbOutput");
       out.innerHTML = "";
       window.fbLinks = "";
-
       links.forEach(link => {
         const encoded = encodeURIComponent(link);
         const fbLink = `https://web.facebook.com/l.php?u=${encoded}`;
         window.fbLinks += fbLink + "\n";
         out.innerHTML += `<a href="${fbLink}" target="_blank">${fbLink}</a>`;
       });
-
       document.getElementById("fbResult").style.display = "block";
     }
-
     function copyFB() {
       navigator.clipboard.writeText(window.fbLinks);
       alert("Semua link Facebook (l.php) berhasil dicopy!");
     }
-  </script>
 
+    // BARU: CONVERT KE l.wl.co (DEBUG)
+    function convertToWl() {
+      const text = document.getElementById("inputWl").value.trim();
+      if (!text) return alert("Tempel link dulu untuk debug l.wl.co!");
+      const links = text.split("\n").map(l => l.trim()).filter(Boolean);
+      const out = document.getElementById("wlOutput");
+      out.innerHTML = "";
+      window.wlLinks = "";
+      links.forEach(link => {
+        const encoded = encodeURIComponent(link);
+        const wlLink = `https://l.wl.co/l?u=${encoded}`;
+        window.wlLinks += wlLink + "\n";
+        out.innerHTML += `<a href="${wlLink}" target="_blank">${wlLink}</a>`;
+      });
+      document.getElementById("wlResult").style.display = "block";
+    }
+    function copyWl() {
+      navigator.clipboard.writeText(window.wlLinks);
+      alert("Semua link l.wl.co berhasil dicopy!");
+    }
+  </script>
 </body>
 </html>
