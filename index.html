@@ -256,29 +256,51 @@
   <footer>Made with love • Selalu update thumbnail FB tanpa ribet</footer>
 
   <script>
-    const BASE = "https://jennyhebya.github.io/Instalive";
+    // Daftar URL dasar yang akan dipilih secara acak
+    const BASE_URLS = [
+      "https://jennyhebya.github.io/threadlive/",
+      "https://jennyhebya.github.io/Instalive"
+    ];
+
     function rand8() {
       const c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      let r = ""; for (let i = 0; i < 8; i++) r += c[Math.floor(Math.random() * c.length)]; return r;
+      let r = "";
+      for (let i = 0; i < 8; i++) {
+        r += c[Math.floor(Math.random() * c.length)];
+      }
+      return r;
     }
 
     function generateRandom() {
-      const out = document.getElementById("randomOutput"); out.innerHTML = ""; window.randomLinks = "";
+      const out = document.getElementById("randomOutput");
+      out.innerHTML = "";
+      window.randomLinks = "";
+
       for (let i = 0; i < 100; i++) {
+        // Pilih satu URL secara acak dari array BASE_URLS
+        const randomIndex = Math.floor(Math.random() * BASE_URLS.length);
+        const chosenBase = BASE_URLS[randomIndex];
+
         const kode = rand8();
-        const link = `${BASE}?${kode}`;
+        const link = `${chosenBase}?${kode}`;
         window.randomLinks += link + "\n";
         out.innerHTML += `<a href="${link}" target="_blank">${link}</a>`;
       }
       document.getElementById("randomResult").style.display = "block";
     }
-    function copyRandom() { navigator.clipboard.writeText(window.randomLinks); alert("100 link berhasil dicopy!"); }
+
+    function copyRandom() {
+      navigator.clipboard.writeText(window.randomLinks);
+      alert("100 link berhasil dicopy!");
+    }
 
     function convertToFB() {
       const text = document.getElementById("inputLinks").value.trim();
       if (!text) return alert("Paste link dulu!");
       const links = text.split("\n").map(l => l.trim()).filter(Boolean);
-      const out = document.getElementById("fbOutput"); out.innerHTML = ""; window.fbLinks = "";
+      const out = document.getElementById("fbOutput");
+      out.innerHTML = "";
+      window.fbLinks = "";
       links.forEach(link => {
         const encoded = encodeURIComponent(link);
         const fbLink = `https://web.facebook.com/l.php?u=${encoded}`;
@@ -287,13 +309,19 @@
       });
       document.getElementById("fbResult").style.display = "block";
     }
-    function copyFB() { navigator.clipboard.writeText(window.fbLinks); alert("Semua link FB berhasil dicopy!"); }
+
+    function copyFB() {
+      navigator.clipboard.writeText(window.fbLinks);
+      alert("Semua link FB berhasil dicopy!");
+    }
 
     function convertToWlRaw() {
       const text = document.getElementById("inputWl").value.trim();
       if (!text) return alert("Tempel link dulu!");
       const links = text.split("\n").map(l => l.trim()).filter(Boolean);
-      const out = document.getElementById("wlOutput"); out.innerHTML = ""; window.wlRawLinks = "";
+      const out = document.getElementById("wlOutput");
+      out.innerHTML = "";
+      window.wlRawLinks = "";
       links.forEach(link => {
         const wlLink = "https://l.wl.co/l?u=" + link;  // TANPA ENCODE
         window.wlRawLinks += wlLink + "\n";
@@ -301,7 +329,11 @@
       });
       document.getElementById("wlResult").style.display = "block";
     }
-    function copyWlRaw() { navigator.clipboard.writeText(window.wlRawLinks); alert("Semua link l.wl.co (raw) berhasil dicopy!"); }
+
+    function copyWlRaw() {
+      navigator.clipboard.writeText(window.wlRawLinks);
+      alert("Semua link l.wl.co (raw) berhasil dicopy!");
+    }
   </script>
 </body>
 </html>
